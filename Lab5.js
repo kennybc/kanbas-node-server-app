@@ -39,6 +39,16 @@ const Lab5 = (app) => {
     todos.push(newTodo);
     res.json(newTodo);
   });
+  app.get("/a5/todos/create", (req, res) => {
+    const newTodo = {
+      id: new Date().getTime(),
+      title: "New Task",
+      completed: false,
+    };
+    todos.push(newTodo);
+    res.json(todos);
+  });
+
   app.put("/a5/todos/:id", (req, res) => {
     const { id } = req.params;
     const todo = todos.find((t) => t.id === parseInt(id));
@@ -77,6 +87,15 @@ const Lab5 = (app) => {
     const { id, comp } = req.params;
     const todo = todos.find((t) => t.id === parseInt(id));
     todo.completed = comp == "true";
+    res.json(todos);
+  });
+  app.get("/a5/todos/:id/delete", (req, res) => {
+    const { id } = req.params;
+    const todo = todos.find((t) => t.id === parseInt(id));
+    const todoIndex = todos.indexOf(todo);
+    if (todoIndex !== -1) {
+      todos.splice(todoIndex, 1);
+    }
     res.json(todos);
   });
 
